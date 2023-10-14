@@ -9,7 +9,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
-
+const methodOverride = require('method-override')
 
 ///////////////////////////////
 // DATABASE CONNECTION
@@ -46,6 +46,7 @@ const ExpenseSchema = new mongoose.Schema({
 app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
+app.use(methodOverride('_method'))
 
 
 ///////////////////////////////
@@ -55,6 +56,52 @@ app.use(express.json()); // parse json bodies
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
+
+// EXPENSE INDEX ROUTE
+app.get("/expense", async (req, res) => {
+    try {
+      // send all expense
+      res.json(await Expense.find({}));
+    } catch (error) {
+      //send error
+      res.status(400).json(error);
+    }
+  });
+  
+  // EXPENSE CREATE ROUTE
+  app.post("/expense", async (req, res) => {
+    try {
+      // send all expense
+      res.json(await Expense.create(req.body));
+    } catch (error) {
+      //send error
+      res.status(400).json(error);
+    }
+  });
+  
+  // EXPENSE Update ROUTE
+  app.put("/expense/:id", async (req, res) => {
+    try {
+      // send all expense
+      res.json(
+        await Expense.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      );
+    } catch (error) {
+      //send error
+      res.status(400).json(error);
+    }
+  });
+  
+  // EXPENSE Destroy ROUTE
+  app.delete("/expense/:id", async (req, res) => {
+    try {
+      // send all expense
+      res.json(await Expense.findByIdAndRemove(req.params.id));
+    } catch (error) {
+      //send error
+      res.status(400).json(error);
+    }
+  });
 
 ///////////////////////////////
 // LISTENER
