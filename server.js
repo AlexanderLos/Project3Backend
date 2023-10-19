@@ -3,7 +3,7 @@
 ////////////////////////////////
 
 require("dotenv").config();
-const { PORT = 3000, DATABASE_URL } = process.env;
+const { PORT = 4000, DATABASE_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -30,8 +30,11 @@ mongoose.connect(DATABASE_URL, {
 // MODELS
 ////////////////////////////////
 const ExpenseSchema = new mongoose.Schema({
-    date: Number,
-    category: String,
+    date: Date,
+    category: {
+      type: String,
+      enum: ['bills', 'shopping', 'groceries', 'entertainment', 'miscellaneous'],
+    },
     amount: Number,
     description: String,
   });
@@ -107,4 +110,4 @@ app.get("/expense", async (req, res) => {
 // LISTENER
 ////////////////////////////////
 
-app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));
+app.listen(PORT, () => console.log(`listening on PORT http://localhost:${PORT}/`));
