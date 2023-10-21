@@ -95,6 +95,21 @@ app.get("/expense", async (req, res) => {
     }
   });
   
+//UPDATE Budget
+  app.put('/expense/budget', async (req, res) => {
+    try {
+      // Update the budget
+      const newBudget = req.body.budget;
+      // You can store this budget value in your server or database as needed
+      // For example, in a variable or database.
+  
+      res.status(200).json({ message: 'Budget updated successfully' });
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  });
+  
+  
   // EXPENSE Destroy ROUTE
   app.delete("/expense/:id", async (req, res) => {
     try {
