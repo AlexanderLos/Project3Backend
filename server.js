@@ -15,7 +15,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 // Define CORS options
 const corsOptions = {
-  origin: "http://localhost:3001", // Replace with the URL of your React app
+  origin: "http://localhost:4000", // Replace with the URL of your React app
   credentials: true, // This allows cookies and authentication headers to be sent with the request
 };
 
