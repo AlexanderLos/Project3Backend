@@ -74,7 +74,7 @@ app.use(methodOverride('_method'))
 //   })
 // );
 
-// Configure CORS with appropriate options
+// Configure CORS 
 app.use(cors(corsOptions))
 ///////////////////////////////
 // ROUTES
@@ -162,7 +162,7 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// Get Gif
+// Get Gif 
 app.get('/gif', (req, res) => {
   const apikey = "yQvc38UnbbCTFlMU6wuJJO1R9sJluJjX"
 
@@ -173,6 +173,7 @@ app.get('/gif', (req, res) => {
   try {
     fetch("https://api.giphy.com/v1/gifs/search?api_key=yQvc38UnbbCTFlMU6wuJJO1R9sJluJjX&q=Sad&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips", {
         method: 'GET', 
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apikey}` 
