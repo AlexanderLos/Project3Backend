@@ -4,10 +4,9 @@
 
 // laods environoment variables from .env file
 require("dotenv").config();
-const bcrypt = require('bcrypt');
-const expressSession = require('express-session');
+// const expressSession = require('express-session');
 const User = require('./user_model'); // User model
-const { PORT = 4000, DATABASE_URL } = process.env;
+const { PORT = 3000, DATABASE_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -15,11 +14,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 // Define CORS options
 const corsOptions = {
-  origin: "http://localhost:4000", // Replace with the URL of your React app
+  origin: "http://localhost:3001", // Replace with the URL of your React app
   credentials: true, // This allows cookies and authentication headers to be sent with the request
 };
-
-
 
 // log requests made to your Node. js server
 const morgan = require("morgan");
@@ -69,13 +66,13 @@ app.use(methodOverride('_method'))
 
 
 // Use express-session middleware for session handling
-app.use(
-  expressSession({
-    secret: process.env.SESSION_SECRET, // A secret key for session encryption
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+// app.use(
+//   expressSession({
+//     secret: process.env.SESSION_SECRET, // A secret key for session encryption
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
 // Configure CORS with appropriate options
 app.use(cors(corsOptions))
@@ -115,43 +112,43 @@ app.get("/expense", async (req, res) => {
 
 
 
-  app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-    try {
-      // Hash the user's password
-      const hashedPassword = bcrypt.hashSync(password, 10); // Use an appropriate number of salt rounds
-      // Create a new user
-      const user = await User.create({ username, password: hashedPassword });
-      // Store user information in the session
-      req.session.user = user;
-      res.json({ user });
-    } catch (error) {
-      console.error('Registration error:', error);
-      res.status(400).json({ error: 'Registration failed' });
-    }
-  });
+  // app.post('/register', async (req, res) => {
+  //   const { username, password } = req.body;
+  //   try {
+  //     // Hash the user's password
+  //     const hashedPassword = bcrypt.hashSync(password, 10); // Use an appropriate number of salt rounds
+  //     // Create a new user
+  //     const user = await User.create({ username, password: hashedPassword });
+  //     // Store user information in the session
+  //     req.session.user = user;
+  //     res.json({ user });
+  //   } catch (error) {
+  //     console.error('Registration error:', error);
+  //     res.status(400).json({ error: 'Registration failed' });
+  //   }
+  // });
   
   
 
 // User login route
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    // Find the user by username
-    const user = await User.findOne({ username });
-    if (!user) {
-      res.status(400).json('Username and password do not match. Please try again.');
-    } else if (bcrypt.compareSync(password, user.password)) {
-      // Store user information in the session
-      req.session.user = user;
-      res.json({ username: user.username });
-    } else {
-      res.status(400).json('Username and password do not match. Please try again.');
-    }
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+// app.post('/login', async (req, res) => {
+//   const { username, password } = req.body;
+//   try {
+//     // Find the user by username
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//       res.status(400).json('Username and password do not match. Please try again.');
+//     } else if (bcrypt.compareSync(password, user.password)) {
+//       // Store user information in the session
+//       req.session.user = user;
+//       res.json({ username: user.username });
+//     } else {
+//       res.status(400).json('Username and password do not match. Please try again.');
+//     }
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// });
 
 // User logout route
 app.get('/logout', (req, res) => {
