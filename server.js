@@ -21,7 +21,7 @@ const corsOptions = {
 // log requests 
 const morgan = require("morgan");
 const methodOverride = require('method-override')
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
 
 ///////////////////////////////
