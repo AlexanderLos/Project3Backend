@@ -18,10 +18,10 @@ const corsOptions = {
   credentials: true, 
 };
 
-// log requests made to your Node. js server
+// log requests 
 const morgan = require("morgan");
 const methodOverride = require('method-override')
-
+const fetch = require('node-fetch');
 
 
 ///////////////////////////////
@@ -172,10 +172,10 @@ app.get('/gif', (req, res) => {
 
   try {
     fetch("https://api.giphy.com/v1/gifs/search?api_key=yQvc38UnbbCTFlMU6wuJJO1R9sJluJjX&q=Sad&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips", {
-        method: 'GET', // or 'POST', depending on the API
+        method: 'GET', 
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apikey}` // or 'ApiKey YOUR_API_KEY' depending on the API
+            'Authorization': `Bearer ${apikey}` 
         }
     })
     .then(response => {
@@ -195,6 +195,10 @@ app.get('/gif', (req, res) => {
   }
 })
 
+// Heres some solutions to any problem that might come from the API above. (That helped me atleast - Alex)
+// https://community.openai.com/t/you-didnt-provide-an-api-key-i-e-authorization-bearer-your-key-but-i-did/98659
+// https://reqbin.com/req/h4rnefmw/post-json-with-bearer-token-authorization-header
+// https://developers.giphy.com/faq/
 
   // EXPENSE Update ROUTE
   app.put("/expense/:id", async (req, res) => {
@@ -240,3 +244,4 @@ app.get('/gif', (req, res) => {
 ////////////////////////////////
 
 app.listen(PORT, () => console.log(`listening on PORT http://localhost:${PORT}/`));
+
