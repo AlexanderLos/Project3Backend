@@ -165,6 +165,38 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// Get Gif
+app.get('/gif', (req, res) => {
+  const apikey = "yQvc38UnbbCTFlMU6wuJJO1R9sJluJjX"
+
+  const randomGifGen = () => {
+    return Math.floor(Math.random() * 25);
+  } 
+
+  try {
+    fetch("https://api.giphy.com/v1/gifs/search?api_key=yQvc38UnbbCTFlMU6wuJJO1R9sJluJjX&q=Sad&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips", {
+        method: 'GET', // or 'POST', depending on the API
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apikey}` // or 'ApiKey YOUR_API_KEY' depending on the API
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        res.json((data.data[randomGifGen()].images.original.url));
+    })
+    .catch(error => {
+        console.error('There was an error fetching the data:', error);
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 
 
   // EXPENSE Update ROUTE
